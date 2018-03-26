@@ -1,0 +1,274 @@
+*{
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+}
+
+.logding{
+	color: #fff
+}
+
+/*遮罩层和logding*/
+.mask{
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	bottom: 0px;
+	right: 0px;
+	background: #000;
+	opacity: 0.8;
+	z-index: 999;
+}
+.mask img{
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    bottom: 0px;
+    margin: auto;
+}
+
+.main{
+	width: 1920px;
+	height: 1080px;
+	margin: 0 auto;
+	position: relative;
+	background: url('images/main_bg.png') top left no-repeat;
+	background-size: 100% 100%;
+}
+#main_img{
+	width: 758px;
+	height: 730px;
+	position: absolute;
+	top: 240px;
+	left: 576px;
+}
+/*销售总额*/
+.gross_sales{
+	position: absolute;
+	top: 185px;
+	left: 558px;
+	font-size: 68px;
+	color: #ffc342;
+	font-weight: bold;
+	letter-spacing:8px;
+}
+.gross_sales span{
+	width: 57px;
+	height: 91px;
+	box-sizing: border-box;
+    padding: 0px 8px;
+    display: inline-block;
+    margin-right: 10px;
+    background-repeat: round;
+	background: url('images/total.png') top left no-repeat;
+}
+/*平台销售排行*/
+.platform_sale{
+	position: absolute;
+	top: 60px;
+	left: 86px;
+}
+.platform_sale .title{
+	font-size: 19px;
+	font-weight: bold;
+	color: #dcfeff;
+	text-shadow:0 0 0.1em #72b6cf,
+                -0 -0 0.1em #72b6cf;
+}
+.platform_sale .name{
+	width: 190px;
+	display: inline-block;
+	font-size: 18px;
+	color: #dcfeff;
+}
+.platform_sale .price{
+	font-size: 18px;
+	color: #dcfeff;
+}
+.platform_sale ul{
+	margin-top: 20px;
+}
+.platform_sale li{
+	padding-top: 17px;
+	padding-left: 76px;
+	line-height: 29px;
+}
+/*商品销售排行*/
+.commodity_sale{
+	position: absolute;
+	top: 390px;
+	left: 86px;
+}
+.commodity_sale .title{
+	font-size: 19px;
+	font-weight: bold;
+	color: #dcfeff;
+	text-shadow:0 0 0.1em #72b6cf,
+                -0 -0 0.1em #72b6cf;
+}
+.commodity_sale .name{
+	width: 190px;
+	display: inline-block;
+	font-size: 18px;
+	color: #dcfeff;
+}
+.commodity_sale .price{
+	font-size: 18px;
+	color: #dcfeff;
+}
+.commodity_sale ul{
+	margin-top: 20px;
+}
+.commodity_sale li{
+	padding-top: 17px;
+	padding-left: 76px;
+	line-height: 29px;
+}
+/*物流公司*/
+.logistics{
+	position: absolute;
+	top: 714px;
+	left: 86px;
+}
+.logistics .title{
+	font-size: 19px;
+	font-weight: bold;
+	color: #dcfeff;
+}
+.logistics .chart p{
+	width: 590px;
+	font-size: 18px;
+	color: #feffff;
+	position: absolute;
+    top: 54px;
+    text-shadow:0 0 0.2em #08417a,
+                -0 -0 0.2em #08417a;
+}
+.logistics .chart_info{
+	width: 388px;
+	height: 238px;
+	position: absolute;
+	top: 66px;
+    left: 0px;
+}
+/*千匠平台数据*/
+#data_screen{
+	position: absolute;
+	top: 42px;
+	left: 1422px;
+	color: #fff;
+}
+#data_screen .title{
+	font-size: 19px;
+	font-weight: bold;
+	color: #dcfeff;
+}
+#data_screen .tyd{
+	position: absolute;
+	top: 74px;
+	text-align: center;
+    width: 410px;
+	font-size: 34px;
+}
+#data_screen .time{
+	position: absolute;
+	top: 126px;
+	text-align: center;
+    width: 410px;
+	font-size: 48px;
+}
+#data_screen .mail{
+	position: absolute;
+	top: 212px;
+    left: 94px;
+	text-align: center;
+    width: 148px;
+	font-size: 48px;
+}
+#data_screen h4{
+	color: #07b1d6;
+	font-size: 16px;
+}
+#data_screen p{
+	color: #06cdec;
+	font-size: 32px;
+}
+#data_screen .shop{
+	position: absolute;
+	top: 212px;
+    left: 266px;
+	text-align: center;
+    width: 148px;
+	font-size: 48px;
+}
+/*成交用户分析*/
+.user{
+	position: absolute;
+	top: 350px;
+	left: 1422px;
+	color: #fff;
+}
+.user .title{
+	font-size: 19px;
+	font-weight: bold;
+	color: #dcfeff;
+	position: absolute;
+    top: 22px;
+    width: 400px;
+}
+.user .info{
+	width: 452px;
+    height: 240px;
+	position: absolute;
+    top: 54px;
+    left: -4px;
+}
+.user .info .member{
+	width: 50%;
+	float: left;
+    height: 240px;
+}
+.user .info .terminal{
+	width: 50%;
+	float: left;
+    height: 240px;
+}
+.user h4{
+	width: 340px;
+	position: absolute;
+    top: 300px;
+}
+/*分类销售排行*/
+.classify{
+	position: absolute;
+	top: 716px;
+	left: 1422px;
+}
+.classify .title{
+	font-size: 19px;
+	font-weight: bold;
+	color: #dcfeff;
+}
+.classify .classify_chart{
+	width: 492px;
+    height: 298px;
+    position: absolute;
+    left: -40px;
+}
+/*成交消息*/
+.news{
+	position: absolute;
+	top: 950px;
+	left: 906px;
+	font-size: 16px;
+	color: #dcfeff;
+	height: 60px;
+    overflow: hidden;
+}
+.news span{
+	margin-right: 30px;
+}
+.news p{
+	line-height: 23px;
+}

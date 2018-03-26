@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>千匠数据大屏</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+<!-- 遮罩层和logding -->
+<div class="mask">
+	<img src="images/logding.gif">
+</div>
+
+<div class="main">
+	<div class="gross_sales">
+		<span>logding...</span>
+	</div>
+	<div class="platform_sale">
+		<div class="title">平台销售总额排行</div>
+		<ul>
+			<li>
+				<span class="name">天猫</span>
+				<span class="price">¥85,000,000</span>
+			</li>
+			<li>
+				<span class="name">京东</span>
+				<span class="price">¥85,000,000</span>
+			</li>
+			<li>
+				<span class="name">官方商城</span>
+				<span class="price">¥85,000,000</span>
+			</li>
+			<li>
+				<span class="name">移动商城</span>
+				<span class="price">¥85,000,000</span>
+			</li>
+			<li>
+				<span class="name">1号店</span>
+				<span class="price">¥85,000,000</span>
+			</li>
+		</ul>
+	</div>
+
+	<div class="commodity_sale">
+		<div class="title">商品销售排行</div>
+		<ul>
+			<li>
+				<span class="name">三只松鼠</span>
+				<span class="price">¥85,000,000</span>
+			</li>
+			<li>
+				<span class="name">米糕</span>
+				<span class="price">¥85,000,000</span>
+			</li>
+			<li>
+				<span class="name">草莓</span>
+				<span class="price">¥85,000,000</span>
+			</li>
+			<li>
+				<span class="name">白切鸡</span>
+				<span class="price">¥85,000,000</span>
+			</li>
+			<li>
+				<span class="name">红烧鱼</span>
+				<span class="price">¥85,000,000</span>
+			</li>
+		</ul>
+	</div>
+
+	<div class="logistics">
+		<div class="title">发货物流公司占比</div>
+		<div class="chart">
+			<p>订单总数：22222222</p>
+			<div id="chart_info" class="chart_info"><span class="logding">logding...</span></div>
+		</div>
+	</div>
+
+	<div id="main_img"><span class="logding">logding...</span></div>
+
+	<div id="data_screen">
+		<div class="title">千匠平台数据</div>
+		<div class="tyd">logding...</div>
+		<div class="time">logding...</div>
+		<div class="mail">
+			<h4>官方商城访问量</h4>
+			<p>3407</p>
+		</div>
+		<div class="shop">
+			<h4>接入店铺数</h4>
+			<p>8</p>
+		</div>
+	</div>
+
+	<div class="user">
+		<div class="title">成交用户分析</div>
+		<div class="info">
+			<div class="member" id="member">logding...</div>
+			<div class="terminal" id="terminal">logding...</div>
+		</div>
+		<h4>会员总数：22222222</h4>
+	</div>
+
+	<div class="classify">
+		<div class="title">分类销售排行</div>
+		<div class="classify_chart" id="classify_chart">
+			<span class="logding">logding...</span>
+		</div>
+	</div>
+
+	<div class="news">
+		<p><span>09:21:21</span>新疆省有一笔新的订单已发货成功</p>
+		<p><span>09:21:21</span>新疆省有一笔新的订单已发货成功</p>
+		<p><span>09:21:21</span>新疆省有一笔新的订单已发货成功</p>
+	</div>
+</div>
+
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="js/echarts-all.js"></script>
+<script>
+
+	//总金额切割
+	function formatNum(str){
+	var newStr = "";
+	var count = 0;
+	 
+		if(str.indexOf(".")==-1){
+		    for(var i=str.length-1;i>=0;i--){
+		    	if(count % 3 == 0 && count != 0){
+		   			newStr = "<span>"+str.charAt(i) + "</span>" + "," + newStr;
+		 		}else{
+		   			newStr = "<span>"+str.charAt(i) + "</span>" + newStr;
+		 	}
+		 	count++;
+		    }
+		  	$(".gross_sales").html(newStr);
+		}else{
+		   	for(var i = str.indexOf(".")-1;i>=0;i--){
+		 		if(count % 3 == 0 && count != 0){
+		   			newStr = "<span>"+str.charAt(i) + "</span>" + "," + newStr;
+			 	}else{
+			   		newStr = "<span>"+str.charAt(i) + "</span>" + newStr; //逐个字符相接起来
+			 	}
+		 		count++;
+		   	}
+		  	
+		  	str = str.substr(str.indexOf("."), 3);
+		  	for(var i = 0;i<str.length;i++){
+		  		if(i==0){newStr += str.charAt(i)}else {
+		   		newStr += "<span>"+str.charAt(i) + "</span>";}
+		   	}
+		   	$(".gross_sales").html(newStr);
+	 	}
+	}
+	formatNum('788783848.98');  //输出
+
+
+
+	// 屏幕小于1920，页面整体缩放
+	var windowWidth = $(window).width();
+	var windowHeight = $(window).height();
+	if(windowWidth < 1920){
+		var s= windowWidth/1920;
+		var h= windowHeight/1080;
+		document.body.style.height= h+"px";
+		document.body.style.transform="scale("+s+")";
+		document.body.style.transformOrigin="0 0"
+	 	// document.getElementsByTagName('body')[0].style.zoom=0.7;
+	}
+
+    // 初始化中间主图图表
+    var main_img = echarts.init(document.getElementById('main_img')); 
+    var option = {
+		    title : {
+		        text: '收货区域地图',
+		        y:'600',
+		        textStyle:{
+		        	color:'#dcfeff',
+		        }
+		    },
+		    legend: {
+		    	show: false,
+		        orient: 'vertical',
+		        x:'left',
+		        y:'bottom',
+		        textStyle: {  
+			        color: '#dcfeff'
+			    },
+		        data:['订单量 0~1W','订单量 1~10W','订单量 10~100W','订单量 >100W'],
+		        color: ['#0d70b5','#08aed2','#ffc342','#ff605c']
+		    },
+		    dataRange: {
+		    	show:true,
+		        x: 'left',
+		        y: 'bottom',
+		        textStyle: {  
+			        color: '#dcfeff'
+			    },
+		        splitList: [
+		            {start: 1500, label: '订单量 0~1W', color: '#0d70b5'},
+		            {start: 900, end: 1500, label: '订单量 1~10W', color: '#08aed2'},
+		            {start: 5, end: 5, label: '订单量 10~100W', color: '#ffc342'},
+		            {start: 15, end: 10, label: '订单量 >100W', color: '#ff605c'}
+		        ]
+		    },
+		    series : [
+		        {
+		            name: '订单量',
+		            type: 'map',
+		            mapType: 'china',
+		            roam: false,
+		            itemStyle:{
+		                normal:{
+		                    label:{
+		                        show:false,
+		                        textStyle: {
+		                           color: "rgb(249, 249, 249)"
+		                        }
+		                    }
+		                },
+		                emphasis:{label:{show:true}}
+		            },
+		            data:[
+		                {name: '北京',value: Math.round(Math.random()*2000)},
+		                {name: '天津',value: Math.round(Math.random()*2000)},
+		                {name: '上海',value: Math.round(Math.random()*2000)},
+		                {name: '重庆',value: Math.round(Math.random()*2000)},
+		                {name: '河北',value: 0},
+		                {name: '河南',value: Math.round(Math.random()*2000)},
+		                {name: '云南',value: 5},
+		                {name: '辽宁',value: 305},
+		                {name: '黑龙江',value: Math.round(Math.random()*2000)},
+		                {name: '湖南',value: 200},
+		                {name: '安徽',value: Math.round(Math.random()*2000)},
+		                {name: '山东',value: Math.round(Math.random()*2000)},
+		                {name: '新疆',value: Math.round(Math.random()*2000)},
+		                {name: '江苏',value: Math.round(Math.random()*2000)},
+		                {name: '浙江',value: Math.round(Math.random()*2000)},
+		                {name: '江西',value: Math.round(Math.random()*2000)},
+		                {name: '湖北',value: Math.round(Math.random()*2000)},
+		                {name: '广西',value: Math.round(Math.random()*2000)},
+		                {name: '甘肃',value: Math.round(Math.random()*2000)},
+		                {name: '山西',value: Math.round(Math.random()*2000)},
+		                {name: '内蒙古',value: Math.round(Math.random()*2000)},
+		                {name: '陕西',value: Math.round(Math.random()*2000)},
+		                {name: '吉林',value: Math.round(Math.random()*2000)},
+		                {name: '福建',value: Math.round(Math.random()*2000)},
+		                {name: '贵州',value: Math.round(Math.random()*2000)},
+		                {name: '广东',value: Math.round(Math.random()*2000)},
+		                {name: '青海',value: Math.round(Math.random()*2000)},
+		                {name: '西藏',value: Math.round(Math.random()*2000)},
+		                {name: '四川',value: Math.round(Math.random()*2000)},
+		                {name: '宁夏',value: Math.round(Math.random()*2000)},
+		                {name: '海南',value: Math.round(Math.random()*2000)},
+		                {name: '台湾',value: Math.round(Math.random()*2000)},
+		                {name: '香港',value: Math.round(Math.random()*2000)},
+		                {name: '澳门',value: Math.round(Math.random()*2000)}
+		            ]
+		        }
+		    ]
+		};
+    // 为echarts对象加载数据 
+    main_img.setOption(option); 
+
+    // 初始化物流公司图表
+    var chart_info = echarts.init(document.getElementById('chart_info'));
+    var option = {
+	    calculable : false,
+	    series : [
+	        {
+	            name:'访问来源',
+	            type:'pie',
+	            radius : '78%',
+	            center: ['51%', '58%'],
+	            itemStyle : {
+	                normal : {
+	                    label : {
+	                    	textStyle: {
+	                            color: '#dcfeff',
+	                        },
+	                    }
+	                }
+	            },
+	            data:[
+	                {value:1548, name:'20%\n中通快递', itemStyle:{ normal:{color:'#1950b8'} }},
+	                {value:310, name:'40%\n园通快递', itemStyle:{ normal:{color:'#1a8fe1'} }},
+	                {value:234, name:'20%\n中通快递', itemStyle:{ normal:{color:'#ffc342'} }},
+	                {value:135, name:'10%\n中通快递', itemStyle:{ normal:{color:'#ff605c'} }},
+	                {value:335, name:'10%\n中通快递', itemStyle:{ normal:{color:'#7664e9'} }}
+	            ],
+	        }
+	    ],
+	    color: ['#dcfeff','#dcfeff','#dcfeff','#dcfeff','#dcfeff']
+    };
+    // 为echarts对象加载数据 
+    chart_info.setOption(option); 
+
+    // 初始化右边新老会员图表
+    var member = echarts.init(document.getElementById('member')); 
+    var option = {
+		    legend: {
+		        orient : 'horizontal',
+		        x : '40',
+		        y : 'bottom',
+			    textStyle:{
+		        	color:'#dcfeff',
+		        },
+		        data:['新会员','老会员']
+		    },
+		    calculable : false,
+		    series : [
+		        {
+		            name:'访问来源',
+		            type:'pie',
+		            radius : ['40%', '60%'],
+		            itemStyle : {
+		                normal : {
+		                    label : {
+		                    	textStyle: {
+		                            color: '#dcfeff',
+		                        },
+		                        show : true
+		                    },
+		                    labelLine : {
+		                        show : true
+		                    }
+		                },
+		                emphasis : {
+		                    label : {
+		                        show : true,
+		                        position : 'center',
+		                        textStyle : {
+		                            fontSize : '20',
+		                            fontWeight : 'bold'
+		                        }
+		                    }
+		                }
+		            },
+		            data:[
+		                {value:10, name:'新会员', itemStyle:{ normal:{color:'#ff605c'} }},
+		                {value:90, name:'老会员', itemStyle:{ normal:{color:'#2d63c9'} }}
+		            ]
+		        }
+		    ],
+		};
+    // 为echarts对象加载数据 
+    member.setOption(option); 
+
+     // 初始化右边终端统计图表
+    var terminal = echarts.init(document.getElementById('terminal')); 
+    var option = {
+		    legend: {
+		        orient : 'horizontal',
+		        x : '40',
+		        y : 'bottom',
+			    textStyle:{
+		        	color:'#dcfeff',
+		        },
+		        data:['PC端','移动端'],
+		    },
+		    calculable : false,
+		    series : [
+		        {
+		            name:'访问来源',
+		            type:'pie',
+		            radius : ['40%', '60%'],
+		            itemStyle : {
+		                normal : {
+		                    label : {
+		                    	textStyle: {
+		                            color: '#dcfeff'
+		                        },
+		                        show : true
+		                    },
+		                    labelLine : {
+		                        show : true
+		                    }
+		                },
+		                emphasis : {
+		                    label : {
+		                        show : true,
+		                        position : 'center',
+		                        textStyle : {
+		                            fontSize : '20',
+		                            fontWeight : 'bold'
+		                        }
+		                    }
+		                }
+		            },
+		            data:[
+		                {value:10, name:'PC端', itemStyle:{ normal:{color:'#1a8fe1'} }},
+		                {value:90, name:'移动端', itemStyle:{ normal:{color:'#ffc342'} }}
+		            ]
+		        }
+		    ]
+		};
+    // 为echarts对象加载数据 
+    terminal.setOption(option);
+
+     // 初始化右边分类销售统计图表
+    var classify_chart = echarts.init(document.getElementById('classify_chart')); 
+    var option = {
+	    	 title: {
+		        x: '60',
+		        y: '96',
+		        text: '销\n售\n额',
+		        textStyle: {
+                    fontSize: '12',
+                    color: '#18d2e4'
+                }
+		    },
+		    grid: {
+		        borderWidth: 0,
+		        y: 80,
+		        y2: 60
+		    },
+		    xAxis: [
+		        {
+		            type : 'category',
+		            data : ['男装','女装','童装','鞋包','饰品','配件'],
+		            axisLabel : {
+                        textStyle: {
+                            color: '#fff'
+                        }
+                    },
+                    splitLine:{show: false},
+                    axisLine:{
+		                lineStyle:{
+		                	color: '#18d2e4',
+		                    type:"arrow"
+		                }                         
+		            }
+		        }
+		    ],
+		    yAxis: [
+		        {
+		            type : 'value',
+		            axisLabel : {
+		            		show: false,
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        },
+                    splitLine:{show: false},
+                    axisLine:{
+		                lineStyle:{
+		                	color: '#18d2e4',
+		                    type:"arrow"
+		                }                         
+		            }
+		        }
+		    ],
+		    series: [
+		        {
+		            name: 'ECharts例子个数统计',
+		            type: 'bar',
+		            itemStyle: {
+		                normal: {
+		                    color: function(params) {
+		                        // build a color map as your need.
+		                        var colorList = [
+		                          '#18dbeb','#18dbeb','#18dbeb','#18dbeb','#18dbeb',
+		                           '#18dbeb'
+		                        ];
+		                        return colorList[params.dataIndex]
+		                    },
+		                    label: {
+		                    	textStyle: {
+	                                color: '#bedff6'
+	                            },
+		                        show: true,
+		                        position: 'top',
+		                        formatter: '{c}w'
+		                    },
+		                    barBorderRadius:[5, 5, 0, 0]
+		                },
+		                emphasis: {
+                            barBorderRadius:[6, 6, 0, 0]
+                        }
+		            },
+		            barWidth : 12,
+		            data: [12,21,10,4,12,5,6,5,25,23,7]
+		        }
+		    ]
+		};
+    // 为echarts对象加载数据 
+    classify_chart.setOption(option);
+
+    //获取当前时间日期
+    function fnDate(){
+	    var myDate = new Date();
+	    var day = myDate.getDate();
+	    var month = myDate.getMonth();
+	    month = month + 1;
+	    var year = myDate.getFullYear();
+	    var hours = myDate.getHours();
+	    var minutes = myDate.getMinutes();
+	    var seconds = myDate.getSeconds();
+	    hours=hours>9?hours:"0"+hours;
+	    minutes=minutes>9?minutes:"0"+minutes;
+	    seconds=seconds>9?seconds:"0"+seconds;
+	    if(month<10){
+            month = '0'+ month;
+        }
+	    if(day<10){
+            day = '0'+ myDate.getDate();
+        }
+	    var YMD = year + '-' + month + '-' + day;
+	    var HMS = hours + ':' + minutes + ':' + seconds;
+	    $(".tyd").text(YMD);
+	    $(".time").text(HMS);
+	}
+    //时间日期渲染
+    setInterval(function(){
+		fnDate();
+	},1000);
+
+    //logding效果
+    document.onreadystatechange=function(){
+	    if(document.readyState=="complete"){
+	        $(".mask").fadeOut();
+	        $('.main').fadeIn();
+	    }
+	};
+</script>
+
+</body>
+</html>
